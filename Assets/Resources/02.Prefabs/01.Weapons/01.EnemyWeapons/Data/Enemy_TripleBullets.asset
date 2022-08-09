@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 749f694307429a94ab09f1c96bebdff1, type: 3}
+  m_Name: Enemy_TripleBullets
+  m_EditorClassIdentifier: 
+  Name: 
+  Description: 
+  Icon: {fileID: 0}
+  Animator: {fileID: 0}
+  Projectile: {fileID: 221415823, guid: 549e601aa82b47a41abe15309070c4d3, type: 3}
+  Damage: 1
+  Iteration: 1
+  DelayBetweenIterations: 0.1
+  BulletPerShot: 3
+  DelayBetweenBullets: 0
+  Angle: 45
+  Cooldown: 4
+  DisableAutoAimWhenShooting: 0
+  RequiresHealth: 0
+  HealthPerUse: 0
+  ProjectileRotating: 1
+  RotateSpeed: 50
+  Upgrades: []
+  AutoUpgrade: 0
+  RequiredUpgradeValue: 0
