@@ -15,24 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "NormalAttack",
-                    "type": "PassThrough",
-                    "id": "83a73beb-aafa-48f1-a4ba-e7d91cba886d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SpecialAttack",
-                    "type": "PassThrough",
-                    "id": "584775cb-3f05-43ab-90e3-10de3639e15d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Dash",
                     "type": "PassThrough",
                     "id": "c4fbc320-a701-405a-ab53-4d9c85670e0b",
@@ -42,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "GrabProjectiles",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "f441964d-98d9-40e7-ad0a-ee01505bbfd4",
                     "expectedControlType": "Button",
@@ -219,28 +201,6 @@
                 },
                 {
                     "name": "",
-                    "id": "9e9d2752-74df-4cfd-a4e7-a2a46113a374",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NormalAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e864bd10-631b-47d0-9614-2b0c81c4643d",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SpecialAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3bf226cc-e6a8-4bb0-8a72-e421ca37f9ec",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -257,7 +217,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GrabProjectiles",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -268,7 +228,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GrabProjectiles",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -279,7 +239,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GrabProjectiles",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -290,7 +250,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GrabProjectiles",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

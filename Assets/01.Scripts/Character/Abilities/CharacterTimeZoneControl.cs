@@ -73,12 +73,11 @@ namespace Penwyn.Game
 
         public override void ConnectEvents()
         {
-            InputReader.Instance.GrabProjectilesPressed += GrabProjectiles;
         }
 
         public override void DisconnectEvents()
         {
-            InputReader.Instance.GrabProjectilesPressed -= GrabProjectiles;
+            
         }
     }
 }

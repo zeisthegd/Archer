@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CharacterHitSound
   m_EditorClassIdentifier: 
   Name: CharacterHitSound
-  Sound: {fileID: 8300000, guid: 3323e3017386d024db207c8d7121b420, type: 3}
+  Sound: {fileID: 8300000, guid: 7527da78ad9fc5b4394d289eb0c34f6d, type: 3}

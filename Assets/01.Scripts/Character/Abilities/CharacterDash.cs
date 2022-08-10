@@ -30,7 +30,7 @@ namespace Penwyn.Game
             {
                 _isDashing = true;
                 _dashTime = DashDuration;
-                _startDashInput = InputReader.Instance.MoveInput;
+                _startDashInput = GameManager.Instance.InputReader.MoveInput;
             }
         }
 
@@ -58,13 +58,13 @@ namespace Penwyn.Game
         public override void ConnectEvents()
         {
             base.ConnectEvents();
-            InputReader.Instance.DashPressed += StartDash;
+            GameManager.Instance.InputReader.DashPressed += StartDash;
         }
 
         public override void DisconnectEvents()
         {
             base.ConnectEvents();
-            InputReader.Instance.DashPressed -= StartDash;
+            GameManager.Instance.InputReader.DashPressed -= StartDash;
         }
     }
 }

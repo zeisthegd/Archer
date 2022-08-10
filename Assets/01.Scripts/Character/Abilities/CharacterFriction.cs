@@ -26,7 +26,7 @@ namespace Penwyn.Game
 
         protected virtual void ApplyFriction()
         {
-            if (InputReader.Instance.MoveInput.magnitude < 0.01F && _controller.Velocity.magnitude > 0)
+            if (GameManager.Instance.InputReader.MoveInput.magnitude < 0.01F && _controller.Velocity.magnitude > 0)
             {
                 Vector2 amount = _controller.Body2D.velocity.normalized * -1F;
                 amount *= _controller.Settings.Friction;

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3580129492523402949}
   - component: {fileID: 5811568882847683989}
   - component: {fileID: 8512598768966799358}
-  - component: {fileID: 2565002095738983625}
   - component: {fileID: 2876216145981573550}
   - component: {fileID: 2674707854141635945}
   m_Layer: 9
@@ -176,19 +175,6 @@ MonoBehaviour:
     m_Bits: 256
   DamageDeal: 0.2
   HitFeedbacks: {fileID: 5314658631025210042}
---- !u!114 &2565002095738983625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3383801527214349399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 880720ae79d3f1a42aa25d7d9a380d20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LocalOffset: {x: 0, y: -0.1, z: 0}
 --- !u!114 &2876216145981573550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,4 +262,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d6e5a549b9b594898504bc89e975c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 43004db5061cad24c89e0abe5c74f459, type: 2}
+  Data: {fileID: 11400000, guid: 6f2f5a55e782c7644bd54af188a87ee0, type: 2}

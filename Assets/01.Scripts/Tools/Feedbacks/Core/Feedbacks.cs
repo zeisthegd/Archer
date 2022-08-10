@@ -6,11 +6,16 @@ namespace Penwyn.Tools
 {
     public class Feedbacks : MonoBehaviour
     {
-        public Feedback[] FeedbacksList;
+        private Feedback[] _feedbacksList = new Feedback[]{};
+
+        private void Awake()
+        {
+            _feedbacksList = GetComponents<Feedback>();
+        }
         
         public virtual void PlayFeedbacks()
         {
-            foreach (Feedback feedback in FeedbacksList)
+            foreach (Feedback feedback in _feedbacksList)
             {
                 feedback.PlayFeedback();
             }
@@ -18,7 +23,7 @@ namespace Penwyn.Tools
 
         public virtual void StopFeedbacks()
         {
-            foreach (Feedback feedback in FeedbacksList)
+            foreach (Feedback feedback in _feedbacksList)
             {
                 feedback.StopFeedback();
             }

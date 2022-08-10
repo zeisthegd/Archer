@@ -35,7 +35,6 @@ namespace Penwyn.Game
                 Icon.sprite = data.Icon;
             Name?.SetText(data.Name);
             Description?.SetText(data.Description);
-            HPCostTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.HealthPerUse, data.HealthPerUse, "green", "red")}>{data.HealthPerUse}</color>");
             AttackTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.Damage, data.Damage, "red", "green")}>{data.Damage}</color>");
             NumOfBulletsTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.BulletPerShot, data.BulletPerShot, "red", "green")}>{data.BulletPerShot}</color>");
             CooldownTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.Cooldown, data.Cooldown, "green", "red")}>{data.Cooldown}</color>");

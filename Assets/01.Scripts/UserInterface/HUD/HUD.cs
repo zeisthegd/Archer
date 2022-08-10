@@ -30,18 +30,7 @@ namespace Penwyn.UI
         {
             if (PlayerHealth != null)
             {
-                PlayerHealth.SetMaxValue(PlayerManager.Instance.Player.Health.MaxHealth);
-                PlayerHealth.SetValue(PlayerManager.Instance.Player.Health.CurrentHealth);
-            }
-        }
-
-        protected virtual void UpdateHealth()
-        {
-            PlayerHealth.SetValue(PlayerManager.Instance.Player.Health.CurrentHealth);
-            if (PlayerManager.Instance.Player.Health.MaxHealth != PlayerHealth.ActualValue.maxValue)
-            {
-                PlayerHealth.SetMaxValue(PlayerManager.Instance.Player.Health.MaxHealth);
-                Debug.Log(PlayerHealth.ActualValue.maxValue);
+                PlayerHealth.AssignStoredValue(PlayerManager.Instance.Player.Health.Value);
             }
         }
 
@@ -120,17 +109,21 @@ namespace Penwyn.UI
 
         public virtual void ConnectEvents()
         {
-            PlayerManager.Instance.Player.Health.OnChanged += UpdateHealth;
-            PlayerManager.Instance.Player.CharacterMoney.MoneyChanged += UpdateMoney;
-            PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.RequestUpgradeEvent += LoadAvailableUpgrades;
+            if (PlayerManager.Instance != null && PlayerManager.Instance.Player != null)
+            {
+                PlayerManager.Instance.Player.CharacterMoney.MoneyChanged += UpdateMoney;
+                PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.RequestUpgradeEvent += LoadAvailableUpgrades;
+            }
             ConnectEndWeaponUpgradesEvents();
         }
 
         public virtual void DisconnectEvents()
         {
-            PlayerManager.Instance.Player.Health.OnChanged -= UpdateHealth;
-            PlayerManager.Instance.Player.CharacterMoney.MoneyChanged -= UpdateMoney;
-            PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.RequestUpgradeEvent -= LoadAvailableUpgrades;
+            if (PlayerManager.Instance != null && PlayerManager.Instance.Player != null)
+            {
+                PlayerManager.Instance.Player.CharacterMoney.MoneyChanged -= UpdateMoney;
+                PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.RequestUpgradeEvent -= LoadAvailableUpgrades;
+            }
             DisconnectEndWeaponUpgradesEvents();
         }
     }

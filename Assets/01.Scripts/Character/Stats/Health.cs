@@ -10,14 +10,9 @@ namespace Penwyn.Game
 {
     public class Health : MonoBehaviour
     {
-        [Header("Health")]
-        public float StartingHealth = 10;
-        [Header("Invincible")]
-        public bool Invincible = false;
-        public Color InvincibleFlickerColor = Color.yellow;
+        [Header("Damage Flicker")]
+        public float DamageFlickerDuration = 1;
 
-        [Header("Invulnerable")]
-        public float InvulnerableDuration = 1;
         [Header("Damaged Feedback")]
         public Color DamageTakenFlickerColor = Color.red;
 
@@ -25,49 +20,36 @@ namespace Penwyn.Game
         public Feedbacks HitFeedbacks;
         public Feedbacks DeathFeedbacks;
 
-        [SerializeField][ReadOnly] protected float _health = 0;
-        [SerializeField][ReadOnly] protected float _maxHealth = 0;
-        protected float _invulnerableTime = 0;
-        protected bool _currentlyInvulnerable = false;
-        protected Character _character;
-        protected HealthBar _healthBar;
+        [SerializeField][ReadOnly] private FloatValue _value;
 
-        public event UnityAction OnChanged;
+        protected float _damageFlickerTime = 0;
+        protected Character _character;
+
+
+
         public event UnityAction<Character> OnDeath;
 
         protected virtual void Awake()
         {
             _character = GetComponent<Character>();
-            SetHealthAtAwake();
-        }
-
-
-
-        protected virtual void Start()
-        {
-            CreateHealthBar();
-        }
-
-        public virtual void SetHealthAtAwake()
-        {
-            _maxHealth = StartingHealth;
-            _health = StartingHealth;
+            _value = new FloatValue();
+            _value.CanBeHigherThanBase = false;
+            _value.CanBeNegative = true;
         }
 
         #region Damage Taken
 
         public virtual void Take(float damage)
         {
-            if (_health > 0 && !_currentlyInvulnerable && !Invincible)
+            if (_value.CurrentValue > 0)
             {
-                _health -= damage;
-                _health = Mathf.Clamp(_health, 0, _maxHealth);
-                OnChanged?.Invoke();
+                _value.CurrentValue -= damage;
+                _value.CurrentValue = Mathf.Clamp(_value.CurrentValue, 0, _value.BaseValue);
                 if (HitFeedbacks != null)
                     HitFeedbacks.PlayFeedbacks();
-                if (_health > 0)
+                if (_value.CurrentValue > 0)
                 {
-                    MakeInvulnerable();
+                    PlayDamageTakenVFX();
                 }
                 else
                 {
@@ -84,10 +66,9 @@ namespace Penwyn.Game
         /// <param name="health">Amount</param>
         public virtual void Lose(float health)
         {
-            _health -= health;
-            _health = Mathf.Clamp(_health, 0, _maxHealth);
-            OnChanged?.Invoke();
-            if (_health <= 0)
+            _value.CurrentValue -= health;
+            _value.CurrentValue = Mathf.Clamp(_value.CurrentValue, 0, _value.BaseValue);
+            if (_value.CurrentValue <= 0)
                 Kill();
         }
 
@@ -99,9 +80,8 @@ namespace Penwyn.Game
         {
             if (health < 0)
                 return;
-            _health += health;
-            _health = Mathf.Clamp(_health, 0, _maxHealth);
-            OnChanged?.Invoke();
+            _value.CurrentValue += health;
+            _value.CurrentValue = Mathf.Clamp(_value.CurrentValue, 0, _value.BaseValue);
         }
 
         /// <summary>
@@ -111,9 +91,8 @@ namespace Penwyn.Game
         /// <param name="maxHealth">Max HP</param>
         public virtual void Set(float curretHealth, float maxHealth)
         {
-            _maxHealth = maxHealth;
-            _health = curretHealth;
-            OnChanged?.Invoke();
+            _value.BaseValue = maxHealth;
+            _value.CurrentValue = curretHealth;
         }
 
         #endregion
@@ -121,65 +100,31 @@ namespace Penwyn.Game
         #region Kill
         public virtual void Kill()
         {
-            _health = 0;
-            OnDeath?.Invoke(_character);
+            _value.CurrentValue = 0;
             gameObject.SetActive(false);
         }
         #endregion
 
-        #region Invulnerable and Invincible
-        public void MakeInvulnerable()
+        #region Damage Taken VFX
+
+        public void PlayDamageTakenVFX()
         {
-            if (InvulnerableDuration > 0)
-                StartCoroutine(PerformInvulnerable());
+            if (DamageFlickerDuration > 0)
+                StartCoroutine(TakeDamageVFXCoroutine());
         }
 
-        public virtual void MakeInvincible(float duration)
+        protected virtual IEnumerator TakeDamageVFXCoroutine()
         {
-            Invincible = true;
-            if (duration > 0)
+            _damageFlickerTime = 0;
+            Coroutine flicker = StartCoroutine(SpriteRendererUtil.Flicker(_character.SpriteRenderer, DamageTakenFlickerColor, DamageFlickerDuration, 0.1F));
+            while (_damageFlickerTime < DamageFlickerDuration)
             {
-                StartCoroutine(InvincibleCoroutine(duration));
-            }
-            else
-            {
-                //TODO change shader or soemthing.
-            }
-        }
-
-        protected virtual IEnumerator PerformInvulnerable()
-        {
-            _currentlyInvulnerable = true;
-            _invulnerableTime = 0;
-            Coroutine flicker = StartCoroutine(SpriteRendererUtil.Flicker(_character.SpriteRenderer, DamageTakenFlickerColor, InvulnerableDuration, 0.1F));
-            while (_invulnerableTime < InvulnerableDuration)
-            {
-                _invulnerableTime += Time.deltaTime;
+                _damageFlickerTime += Time.deltaTime;
                 yield return null;
             }
-            _currentlyInvulnerable = false;
         }
 
-        protected virtual IEnumerator InvincibleCoroutine(float duration)
-        {
-            _invulnerableTime = 0;
-            Coroutine flicker = StartCoroutine(SpriteRendererUtil.Flicker(_character.SpriteRenderer, InvincibleFlickerColor, duration));
-            while (_invulnerableTime < duration)
-            {
-                _invulnerableTime += Time.deltaTime;
-                yield return null;
-            }
-            Invincible = false;
-            StopCoroutine(flicker);
-        }
         #endregion
-
-        protected virtual void CreateHealthBar()
-        {
-            _healthBar = GetComponent<HealthBar>();
-            if (_healthBar)
-                _healthBar.Initialization();
-        }
 
         public virtual void Reset()
         {
@@ -190,10 +135,7 @@ namespace Penwyn.Game
 
         public virtual void OnEnable()
         {
-            _currentlyInvulnerable = false;
-            _invulnerableTime = 0;
-            if (_healthBar)
-                _healthBar.SetHealthSlidersValue();
+            _damageFlickerTime = 0;
         }
 
         public virtual void OnDisable()
@@ -201,8 +143,9 @@ namespace Penwyn.Game
             Reset();
         }
 
-        public Character Character { get => _character; }
-        public float CurrentHealth { get => _health; }
-        public float MaxHealth { get => _maxHealth; }
+        public FloatValue Value { get => _value; }
+        public float MaxHealth { get => _value.BaseValue; }
+        public float CurrentHealth { get => _value.CurrentValue; }
+
     }
 }

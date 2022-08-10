@@ -34,9 +34,9 @@ namespace Penwyn.Game
 
         public virtual void OnTriggerEnter2D(Collider2D col)
         {
-            HitFeedbacks?.PlayFeedbacks();
             if (this.gameObject.activeInHierarchy && TargetMask.Contains(col.gameObject.layer))
             {
+                HitFeedbacks?.PlayFeedbacks();
                 DealDamage(col.gameObject);
             }
         }

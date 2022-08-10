@@ -30,7 +30,7 @@ namespace Penwyn.Game
         {
             base.FixedUpdateAbility();
             if (Type == ControlType.PlayerInput)
-                RunRaw(InputReader.Instance.MoveInput);
+                RunRaw(GameManager.Instance.InputReader.MoveInput);
             DustHandling();
 
         }
