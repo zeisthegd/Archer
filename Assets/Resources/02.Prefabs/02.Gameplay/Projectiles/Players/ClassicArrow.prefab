@@ -174,7 +174,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   DamageDeal: 0.2
-  HitFeedbacks: {fileID: 5314658631025210042}
+  HitFeedbacks: {fileID: 0}
 --- !u!114 &2876216145981573550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,8 +248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0dfef011d977b9498a3e8678787e79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FeedbacksList:
-  - {fileID: 2407286288978074327}
 --- !u!114 &2407286288978074327
 MonoBehaviour:
   m_ObjectHideFlags: 0

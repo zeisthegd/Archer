@@ -41,6 +41,7 @@ namespace Penwyn.Game
             switch (_bowChargeState.CurrentState)
             {
                 case BowChargeState.Idle:
+                    HandleIdleState();
                     break;
                 case BowChargeState.Charging:
                     HandleChargingState();
@@ -65,6 +66,11 @@ namespace Penwyn.Game
                 Shoot();
                 _bowChargeState.Change(BowChargeState.Idle);
             }
+        }
+
+        public void HandleIdleState()
+        {
+            _chargeTime.CurrentValue -= Data.AttackSpeed * Time.deltaTime;
         }
 
         public void HandleChargingState()

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ElfArcher
+  m_Controller: {fileID: 9100000, guid: 6edef26788321b447a4ebd813d80823a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 488b15afa1709d74c8847659455191cb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a1b1abb2b041b184db66345f06edcaa5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 82372dc3cfaea5d4b894ebb758659b2a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6d166c64a4363814a90a9e29881cdcc6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d5311593b8476d8468fb50188fa3a43b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2650309acd8399d418a0af3623094354, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 8198cac5ddd499f4b967c329d48c69d6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bc34e7ab21ee926498a94aee1b9111ab, type: 2}

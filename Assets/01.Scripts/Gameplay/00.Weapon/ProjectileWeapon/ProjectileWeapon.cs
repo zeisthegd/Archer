@@ -35,6 +35,7 @@ namespace Penwyn.Game
 
         protected virtual IEnumerator UseWeaponCoroutine()
         {
+            _weaponUseFeedbacks?.PlayFeedbacks();
             float projectileStep = GetProjectileStep();
 
             gameObject.RotateZ(CurrentData.Angle / 2F);

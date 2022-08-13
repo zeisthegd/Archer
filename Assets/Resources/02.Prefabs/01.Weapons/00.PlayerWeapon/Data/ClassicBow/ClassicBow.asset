@@ -18,13 +18,14 @@ MonoBehaviour:
   AnimatorOverride: {fileID: 0}
   Projectile: {fileID: 5811568882847683989, guid: cfb1214dd0834c04eb2aad74e8de4916, type: 3}
   Damage: 1
-  Iteration: 4
+  Iteration: 2
   DelayBetweenIterations: 0.1
   BulletPerShot: 1
-  DelayBetweenBullets: 0.1
+  DelayBetweenBullets: 0
   Angle: 0
-  Cooldown: 0.1
+  Cooldown: 0
   DisableAimingWhenShooting: 0
+  WeaponUseFeedbacks: {fileID: 3480686998019951488, guid: ed6bfd2b81b55a841a5e8cceec3f739a, type: 3}
   Upgrades: []
   RequiredUpgradeValue: 0
-  AttackSpeed: 60
+  AttackSpeed: 120

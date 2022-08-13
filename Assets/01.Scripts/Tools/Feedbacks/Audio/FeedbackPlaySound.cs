@@ -25,6 +25,9 @@ namespace Penwyn.Tools
             _audioSource.GetComponent<PoolableObject>().LifeTime = Data.Sound.length;
             _audioSource.gameObject.SetActive(true);
             _audioSource.transform.position = this.transform.position;
+
+            _audioSource.pitch = Data.Pitch;
+
             _audioSource.PlayOneShot(Data.Sound);
         }
 

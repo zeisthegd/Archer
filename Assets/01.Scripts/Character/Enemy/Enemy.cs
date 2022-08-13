@@ -7,9 +7,6 @@ namespace Penwyn.Game
     public class Enemy : Character
     {
         public AIBrain AIBrain;
-        public EnemyData InitData;
-
-        protected EnemyData _data;
 
         protected bool newData;
 
@@ -19,27 +16,25 @@ namespace Penwyn.Game
             if (AIBrain == null)
                 AIBrain = GetComponent<AIBrain>();
         }
-
-        public virtual void LoadEnemy(EnemyData data)
+        
+        public virtual void Load(EnemyData data)
         {
+            base.Load(data);
             newData = false;
-            if (this._data != data)
+            if (this.Data != data)
                 newData = true;
-            this._data = data;
             LoadEnemy();
         }
 
         public virtual void LoadEnemy()
         {
-            this.Health.Set(_data.Health, _data.Health);
             if (newData)
             {
-                this.Animator.runtimeAnimatorController = _data.RuntimeAnimatorController;
-                this._characterRun.RunSpeed = _data.MoveSpeed;
-                this._characterWeaponHandler.ChangeWeapon(_data.WeaponData);
+                this._characterRun.RunSpeed = Data.MoveSpeed;
+                this._characterWeaponHandler.ChangeWeapon(Data.WeaponData);
             }
         }
-        
-        public EnemyData Data { get => _data; }
+
+        public EnemyData Data { get => (EnemyData)_data; }
     }
 }

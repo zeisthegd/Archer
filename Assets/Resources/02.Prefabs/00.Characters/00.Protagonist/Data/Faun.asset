@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02bd5697c264fa649b80522965960d96, type: 3}
+  m_Name: Faun
+  m_EditorClassIdentifier: 
+  StartingHealth: 10
+  RuntimeAnimatorController: {fileID: 22100000, guid: b58e084babbc2ee4eb46b8c8344d4c39, type: 2}
+  StartingBow: {fileID: 11400000, guid: 4cd1e3c0eb32a3b47b49950894d95e7b, type: 2}

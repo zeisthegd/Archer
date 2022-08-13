@@ -12,6 +12,8 @@ namespace Penwyn.Game
         [Header("Player")]
         public Player PlayerToSpawn;
         public Player ExistedPlayer;
+        [Header("Starting Data")]
+        public PlayerData ChosenData;
 
         private Player _player;
 
@@ -26,6 +28,7 @@ namespace Penwyn.Game
                 _player = ExistedPlayer;
             else if (PlayerToSpawn != null)
                 _player = Instantiate(PlayerToSpawn);
+            _player.Load(ChosenData);
             PlayerSpawned?.Invoke();
         }
 

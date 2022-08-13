@@ -23,9 +23,6 @@ namespace Penwyn.Game
         [Header("Input")]
         public WeaponInputType InputType;
 
-        [Header("Feedbacks")]
-        public Feedbacks UseFeedbacks;
-
         [Header("Owner")]
         [ReadOnly] public Character Owner;
 
@@ -33,15 +30,18 @@ namespace Penwyn.Game
         protected WeaponAim _weaponAim;
         protected WeaponAutoAim _weaponAutoAim;
         protected Coroutine _cooldownCoroutine;
+        protected Feedbacks _weaponUseFeedbacks;
+
 
         public event UnityAction RequestUpgradeEvent;
 
         protected virtual void Awake()
         {
             GetComponents();
+            _weaponUseFeedbacks = Instantiate(CurrentData.WeaponUseFeedbacks, this.transform.position, Quaternion.identity, this.transform);
         }
 
-        public virtual void Initialization()
+        public virtual void Initialize()
         {
         }
         protected virtual void Start()
@@ -64,8 +64,6 @@ namespace Penwyn.Game
         protected virtual void UseWeapon()
         {
             _weaponState.Change(WeaponState.WeaponUse);
-            if (UseFeedbacks != null)
-                UseFeedbacks.PlayFeedbacks();
         }
 
         public virtual void UseWeaponTillNoTarget()

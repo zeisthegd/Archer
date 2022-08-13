@@ -31,7 +31,7 @@ namespace Penwyn.Game
 
             _currentWeapon = Instantiate(InitialWeaponPrefab, WeaponHolder.position, Quaternion.identity, WeaponHolder);
             _currentWeapon.Owner = this._character;
-            _currentWeapon.Initialization();
+            _currentWeapon.Initialize();
             _currentWeapon.LoadWeapon(InitialWeaponData);
         }
 

@@ -10,6 +10,9 @@ namespace Penwyn.Game
 {
     public class Health : MonoBehaviour
     {
+        [Header("Display")]
+        public WorldSpaceProgressBar HPValueBar;
+
         [Header("Damage Flicker")]
         public float DamageFlickerDuration = 1;
 
@@ -35,6 +38,7 @@ namespace Penwyn.Game
             _value = new FloatValue();
             _value.CanBeHigherThanBase = false;
             _value.CanBeNegative = true;
+            HPValueBar.AssignValue(_value);
         }
 
         #region Damage Taken

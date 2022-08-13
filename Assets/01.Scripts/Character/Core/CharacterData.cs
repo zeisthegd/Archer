@@ -7,7 +7,7 @@ namespace Penwyn.Game
     public class CharacterData : ScriptableObject
     {
         [Header("General")]
-        public float Health = 1;
+        public float StartingHealth = 1;
 
         [Header("Animation")]
         public RuntimeAnimatorController RuntimeAnimatorController;

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Penwyn.Tools;
+
 namespace Penwyn.Game
 {
     [CreateAssetMenu(menuName = "Game/Character/Weapon/Data", fileName = "NewWeaponData")]
@@ -32,6 +34,9 @@ namespace Penwyn.Game
         public float Angle = 0;
         public float Cooldown = 1;
         public bool DisableAimingWhenShooting = false;
+
+        [Header("Feedbacks")]
+        public Feedbacks WeaponUseFeedbacks;
 
         [Header("Upgrade")]
         public List<WeaponData> Upgrades;

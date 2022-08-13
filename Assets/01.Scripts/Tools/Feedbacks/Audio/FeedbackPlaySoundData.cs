@@ -10,5 +10,6 @@ namespace Penwyn.Tools
     {
         public string Name;
         public AudioClip Sound;
+        public float Pitch = 1;
     }
 }

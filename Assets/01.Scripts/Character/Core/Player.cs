@@ -6,22 +6,18 @@ namespace Penwyn.Game
 {
     public class Player : Character
     {
-        public EnemyData InitData;
-
-        protected EnemyData _data;
-
-        protected bool newData;
-
         protected override void Awake()
         {
             base.Awake();
         }
 
-        public virtual void Load(EnemyData data)
+        public virtual void Load(PlayerData data)
         {
-
+            base.Load(data);
+            Debug.Log(this._characterWeaponHandler);
+            this._characterWeaponHandler.ChangeWeapon(Data.StartingBow);
         }
-        
-        public EnemyData Data { get => _data; }
+
+        public PlayerData Data { get => (PlayerData)_data; }
     }
 }

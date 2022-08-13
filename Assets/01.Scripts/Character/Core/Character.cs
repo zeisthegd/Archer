@@ -27,11 +27,11 @@ namespace Penwyn.Game
         [Header("Abilities")]
         public List<GameObject> AbilitiesContainer;
 
-
         protected List<CharacterAbility> _abilities;
         protected CharacterWeaponHandler _characterWeaponHandler;
         protected CharacterRun _characterRun;
         protected CharacterHandleMoney _characterMoney;
+        protected CharacterData _data;
         private StateMachine<CharacterAbilityStates> _states;
 
 
@@ -62,6 +62,15 @@ namespace Penwyn.Game
         }
 
         #endregion
+
+        public virtual void Load(CharacterData data)
+        {
+            Awake();
+            this._data = data;
+            this.Animator.runtimeAnimatorController = _data.RuntimeAnimatorController;
+            this.Health.Value.SetBaseValue(_data.StartingHealth);
+            this.Health.Value.SetCurrentValue(_data.StartingHealth);
+        }
 
 
         #region Abilities Handling
