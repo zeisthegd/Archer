@@ -23,6 +23,7 @@ namespace Penwyn.Game
         public void StartGame()
         {
             PlayerManager.SpawnPlayer();
+            LevelManager.LoadLevel();
             InputReader.EnableGameplayInput();
         }
     }

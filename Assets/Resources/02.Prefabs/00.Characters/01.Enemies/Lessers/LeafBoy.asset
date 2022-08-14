@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 502cd353fc381c046851721985415b83, type: 3}
-  m_Name: Lesser
+  m_Name: LeafBoy
   m_EditorClassIdentifier: 
-  Health: 3
+  StartingHealth: 1
   RuntimeAnimatorController: {fileID: 0}
   MoveSpeed: 1
   ThreatLevel: 3
-  Type: 1
+  Type: 0
   WeaponData: {fileID: 11400000, guid: 33ef187984bf38b419ca0dcf87079629, type: 2}

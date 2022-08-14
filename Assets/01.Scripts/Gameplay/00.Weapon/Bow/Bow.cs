@@ -8,6 +8,7 @@ namespace Penwyn.Game
 {
     public class Bow : ProjectileWeapon
     {
+        public Vector3 FollowOffset;
         public Transform ArrowPosition;
         public WorldSpaceProgressBar ChargeTimeBar;
 
@@ -32,7 +33,7 @@ namespace Penwyn.Game
         protected override void Update()
         {
             base.Update();
-            transform.position = Owner.Position;
+            transform.position = Owner.Position + FollowOffset;
             HandleBowChargeState();
         }
 

@@ -38,7 +38,7 @@ namespace Penwyn.Game
             _value = new FloatValue();
             _value.CanBeHigherThanBase = false;
             _value.CanBeNegative = true;
-            HPValueBar.AssignValue(_value);
+            HPValueBar?.AssignValue(_value);
         }
 
         #region Damage Taken

@@ -22,7 +22,6 @@ namespace Penwyn.Game
         public override void AwakeAbility(Character character)
         {
             base.AwakeAbility(character);
-            CreateWeapon();
         }
         public virtual void CreateWeapon()
         {

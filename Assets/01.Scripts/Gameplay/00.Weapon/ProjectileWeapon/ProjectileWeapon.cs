@@ -94,6 +94,7 @@ namespace Penwyn.Game
         public override void GetComponents()
         {
             base.GetComponents();
+            Debug.Log("GetComponents");
             _projectilePooler = GetComponent<ObjectPooler>();
         }
     }

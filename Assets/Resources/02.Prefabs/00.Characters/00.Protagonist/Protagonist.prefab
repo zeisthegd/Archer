@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 614565485682820540}
-  - component: {fileID: 614565485682820519}
   - component: {fileID: 614565485682820513}
   - component: {fileID: 614565485682820516}
   - component: {fileID: 111439566443760355}
   - component: {fileID: 7734102167369768345}
   - component: {fileID: 1966635228}
+  - component: {fileID: 220960587458760306}
   m_Layer: 6
   m_Name: Protagonist
   m_TagString: Player
@@ -37,26 +37,9 @@ Transform:
   - {fileID: 614565486169196507}
   - {fileID: 614565487340159101}
   - {fileID: 3630471815209104911}
-  - {fileID: 6092649818521722730}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &614565485682820519
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614565485682820541}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!50 &614565485682820513
 Rigidbody2D:
   serializedVersion: 4
@@ -90,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2d5eff8049b5b4fbb31ab42802be6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPValueBar: {fileID: 3791584555573707142}
+  HPValueBar: {fileID: 0}
   DamageFlickerDuration: 1
   DamageTakenFlickerColor: {r: 0.60784316, g: 0.101960786, b: 0.039215688, a: 1}
   HitFeedbacks: {fileID: 603896595935614320}
@@ -147,6 +130,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleInputType: 0
+--- !u!70 &220960587458760306
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614565485682820541}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.335, y: 0.75}
+  m_Direction: 0
 --- !u!1 &614565486169196504
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,54 +360,6 @@ MonoBehaviour:
   ForbidPermissionControllerStates: 
   DashDuration: 0.15
   DashSpeed: 15
---- !u!1 &8868027822835224302
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6092649818521722730}
-  - component: {fileID: 3791584555573707142}
-  m_Layer: 6
-  m_Name: HealthBar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6092649818521722730
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8868027822835224302}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 614565485682820540}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3791584555573707142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8868027822835224302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6d5573a300be054983139ded7b6dcf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Canvas: {fileID: 906314242042212124, guid: 4d90f8e9e9a903a48b9451ebda00cb3a, type: 3}
-  ProgressBarPrefab: {fileID: 1392665138393269310, guid: ada19b5a08b66774a9f7dfff21ce2e00, type: 3}
-  ProgressBarOffset: {x: 0, y: 0.65, z: 0}
-  ParentCanvasUnderThis: 1
 --- !u!1 &9010789907951252950
 GameObject:
   m_ObjectHideFlags: 0

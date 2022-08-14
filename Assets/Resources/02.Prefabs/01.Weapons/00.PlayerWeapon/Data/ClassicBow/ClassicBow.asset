@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Forra
   Description: Description Here.
-  Icon: {fileID: 678381737, guid: 0132f63069f4b4e4fac9ac3088020847, type: 3}
+  Icon: {fileID: -1054053860, guid: 2c96ad7f3728e424783a0829aa79886e, type: 3}
   AnimatorOverride: {fileID: 0}
   Projectile: {fileID: 5811568882847683989, guid: cfb1214dd0834c04eb2aad74e8de4916, type: 3}
   Damage: 1
-  Iteration: 2
+  Iteration: 1
   DelayBetweenIterations: 0.1
   BulletPerShot: 1
   DelayBetweenBullets: 0

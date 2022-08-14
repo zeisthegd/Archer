@@ -70,8 +70,7 @@ namespace Penwyn.UI
             if (_storedValue != null)
                 RemoveValue();
             _storedValue = newFloatValue;
-            SetMaxValue(_storedValue.BaseValue);
-            SetValue(_storedValue.CurrentValue);
+            UpdateCurrentValue();
             _storedValue.CurrentValueChanged += UpdateCurrentValue;
         }
 
@@ -83,6 +82,7 @@ namespace Penwyn.UI
 
         public virtual void UpdateCurrentValue()
         {
+            SetMaxValue(_storedValue.BaseValue);
             SetValue(_storedValue.CurrentValue);
         }
 

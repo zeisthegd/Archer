@@ -37,12 +37,12 @@ namespace Penwyn.Game
 
         protected virtual void Awake()
         {
-            GetComponents();
-            _weaponUseFeedbacks = Instantiate(CurrentData.WeaponUseFeedbacks, this.transform.position, Quaternion.identity, this.transform);
+
         }
 
         public virtual void Initialize()
         {
+            GetComponents();
         }
         protected virtual void Start()
         {
@@ -93,6 +93,7 @@ namespace Penwyn.Game
         public virtual void LoadWeapon(WeaponData data)
         {
             CurrentData = data;
+            _weaponUseFeedbacks = Instantiate(CurrentData.WeaponUseFeedbacks, this.transform.position, Quaternion.identity, this.transform);
             //SpriteRenderer.sprite = data.Icon;
         }
 

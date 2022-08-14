@@ -45,14 +45,11 @@ namespace Penwyn.Game
         protected virtual void CreateEnemyPools()
         {
             ObjectPoolers = new List<ObjectPooler>();
-            foreach (EnemySpawnSettings spawnSettings in MapData.SpawnSettings)
-            {
-                ObjectPooler enemyPool = Instantiate(EnemyPoolPrefab);
-                enemyPool.ObjectToPool = spawnSettings.Prefab.gameObject;
-                enemyPool.Init();
-                ObjectPoolers.Add(enemyPool);
-                ConnectEnemyInPoolWithDeathEvent(enemyPool);
-            }
+            ObjectPooler enemyPool = Instantiate(EnemyPoolPrefab);
+            enemyPool.ObjectToPool = MapData.EnemyPrefab.gameObject;
+            enemyPool.Init();
+            ObjectPoolers.Add(enemyPool);
+            ConnectEnemyInPoolWithDeathEvent(enemyPool);
         }
 
         /// <summary>
@@ -61,27 +58,22 @@ namespace Penwyn.Game
         /// <returns></returns>
         public virtual IEnumerator SpawnRandomEnemies()
         {
-            if (MapData.SpawnSettings.Length > 0)
+            _isSpawning = true;
+            while (LevelManager.Instance.CurrentThreatLevel < LevelManager.Instance.MaxThreatLevel)
             {
-                _isSpawning = true;
-                while (LevelManager.Instance.CurrentThreatLevel < LevelManager.Instance.MaxThreatLevel)
+                EnemyData data = MapData.GetRandomEnemySpawnSettings();
+                foreach (ObjectPooler pooler in ObjectPoolers)
                 {
-                    EnemySpawnSettings settings = MapData.GetRandomEnemySpawnSettings();
-                    EnemyData randomEnemyData = settings.GetRandomEnemyData();
-                    foreach (ObjectPooler pooler in ObjectPoolers)
+                    if (pooler.ObjectToPool.gameObject == MapData.EnemyPrefab.gameObject)
                     {
-                        if (pooler.ObjectToPool.gameObject == settings.Prefab.gameObject)
-                        {
-                            GameObject pooledObject = pooler.PullOneObject();
-                            SpawnOneEnemy(pooledObject, randomEnemyData);
-                            break;
-                        }
+                        Debug.Log("while: SpawnRandomEnemies");
+                        GameObject pooledObject = pooler.PullOneObject();
+                        SpawnOneEnemy(pooledObject, data);
+                        break;
                     }
-                    yield return null;
                 }
+                yield return null;
             }
-            else
-                Debug.LogWarning("Not enemy spawn settings inserted");
             _isSpawning = false;
         }
 
@@ -115,16 +107,11 @@ namespace Penwyn.Game
         /// Get an empty position near the player.
         /// </summary>
         /// <returns></returns>
-        protected virtual Vector3 GetPositionNearPlayer()
+        protected virtual Vector2 GetPositionNearPlayer()
         {
-            Vector3 randomPosNearPlayer;
-            float dst = 0;
-            do
-            {
-                randomPosNearPlayer = LevelManager.Instance.LevelGenerator.GetRandomEmptyPosition();
-                dst = Vector3.Distance(randomPosNearPlayer, PlayerManager.Instance.Player.Position);
-            }
-            while (dst < MinDistanceToPlayer || dst > MaxDistanceToPlayer);
+            Vector2 playerPos = PlayerManager.Instance.Player.Position;
+            Vector2 randomPosNearPlayer = new Vector2(Randomizer.RandomNumber(playerPos.x - MaxDistanceToPlayer, playerPos.x + MaxDistanceToPlayer),
+            Randomizer.RandomNumber(playerPos.y - MaxDistanceToPlayer, playerPos.y + MaxDistanceToPlayer));
             return randomPosNearPlayer;
         }
 
@@ -155,7 +142,7 @@ namespace Penwyn.Game
         {
             if (_waitToSpawnTime > 0)
                 _waitToSpawnTime -= Time.deltaTime;
-            if (_waitToSpawnTime < 0)
+            if (_waitToSpawnTime <= 0 && !_isSpawning)
             {
                 _waitToSpawnTime = 0;
                 StartCoroutine(SpawnRandomEnemies());

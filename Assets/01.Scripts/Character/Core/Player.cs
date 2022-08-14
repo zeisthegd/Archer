@@ -14,7 +14,6 @@ namespace Penwyn.Game
         public virtual void Load(PlayerData data)
         {
             base.Load(data);
-            Debug.Log(this._characterWeaponHandler);
             this._characterWeaponHandler.ChangeWeapon(Data.StartingBow);
         }
 
