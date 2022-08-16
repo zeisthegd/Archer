@@ -8,6 +8,7 @@ using TMPro;
 
 using Penwyn.Game;
 using Penwyn.Tools;
+using System;
 
 namespace Penwyn.UI
 {
@@ -15,32 +16,64 @@ namespace Penwyn.UI
     {
         [Header("Player")]
         public ProgressBar PlayerHealth;
-        public TMP_Text PlayerMoney;
+        public ProgressBar PlayerEXP;
         public Button WeaponButton;
         public List<WeaponUpgradeButton> WeaponUpgradeButtons;
 
+        [Header("Level")]
+        public ProgressBar LevelProgress;
+
+
         protected virtual void Awake()
         {
-            PlayerManager.PlayerSpawned += OnPlayerSpawned;
+            PlayerManager.Instance.PlayerSpawned += OnPlayerSpawned;
+            LevelManager.Instance.Loaded += OnLevelLoaded;
         }
 
-        #region PlayerHUD
 
-        public virtual void SetHealthBar()
+        #region Player HUD #####################################################################
+        private void OnPlayerSpawned()
         {
-            if (PlayerHealth != null)
-            {
-                PlayerHealth.AssignStoredValue(PlayerManager.Instance.Player.Health.Value);
-            }
+            SetUpPlayerInfo();
+            SetWeaponButtonIcon();
+            ConnectEvents();
         }
 
-        protected virtual void UpdateMoney()
+        public virtual void SetUpPlayerInfo()
         {
-            if (PlayerMoney != null)
-                PlayerMoney.SetText(PlayerManager.Instance.Player.CharacterMoney.CurrentMoney + "");
+            PlayerHealth?.AssignStoredValue(PlayerManager.Instance.Player.Health.Value);
+            PlayerEXP?.AssignStoredValue(PlayerManager.Instance.Player.Experience);
         }
 
-        #region Weapon Upgrades
+        #endregion
+
+        #region Level HUD #####################################################################
+
+        private void OnLevelLoaded()
+        {
+            SetUpLevelProgressInfo();
+        }
+
+        private void OnBossSpawned()
+        {
+            SetUpLevelBossInfo();
+        }
+
+
+        public virtual void SetUpLevelProgressInfo()
+        {
+            LevelProgress?.AssignStoredValue(LevelManager.Instance.Progress);
+        }
+
+        public virtual void SetUpLevelBossInfo()
+        {
+            LevelProgress?.RemoveValue();
+            LevelProgress?.AssignStoredValue(LevelManager.Instance.EnemySpawner.Boss.Health.Value);
+        }
+
+        #endregion
+
+        #region Weapon Upgrades #####################################################################
 
         public virtual void LoadAvailableUpgrades()
         {
@@ -49,7 +82,7 @@ namespace Penwyn.UI
             Time.timeScale = 0;
             for (int i = 0; i < PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.CurrentData.Upgrades.Count; i++)
             {
-                WeaponUpgradeButtons[i].Set(PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.CurrentData.Upgrades[i]);
+                WeaponUpgradeButtons[i].Set((BowData)PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.CurrentData.Upgrades[i]);
                 WeaponUpgradeButtons[i].gameObject.SetActive(true);
             }
         }
@@ -88,15 +121,6 @@ namespace Penwyn.UI
 
         #endregion
 
-        protected virtual void OnPlayerSpawned()
-        {
-            SetHealthBar();
-            SetWeaponButtonIcon();
-            ConnectEvents();
-        }
-
-        #endregion
-
         protected virtual void OnEnable()
         {
 
@@ -111,7 +135,6 @@ namespace Penwyn.UI
         {
             if (PlayerManager.Instance != null && PlayerManager.Instance.Player != null)
             {
-                PlayerManager.Instance.Player.CharacterMoney.MoneyChanged += UpdateMoney;
                 PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.RequestUpgradeEvent += LoadAvailableUpgrades;
             }
             ConnectEndWeaponUpgradesEvents();
@@ -121,7 +144,6 @@ namespace Penwyn.UI
         {
             if (PlayerManager.Instance != null && PlayerManager.Instance.Player != null)
             {
-                PlayerManager.Instance.Player.CharacterMoney.MoneyChanged -= UpdateMoney;
                 PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.RequestUpgradeEvent -= LoadAvailableUpgrades;
             }
             DisconnectEndWeaponUpgradesEvents();

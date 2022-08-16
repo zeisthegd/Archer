@@ -15,21 +15,21 @@ namespace Penwyn.Game
         public Image Icon;
         public TMP_Text Name;
         public TMP_Text Description;
-        public WeaponData Data;
+        public BowData Data;
 
         [Header("Attributes")]
         public TMP_Text HPCostTxt;
         public TMP_Text AttackTxt;
         public TMP_Text NumOfBulletsTxt;
-        public TMP_Text CooldownTxt;
+        public TMP_Text ASPDTxt;
 
 
 
         public event UnityAction DataChosen;
 
-        public virtual void Set(WeaponData data)
+        public virtual void Set(BowData data)
         {
-            WeaponData oldData = Instantiate(data);
+            BowData oldData = (BowData)PlayerManager.Instance.Player.CharacterWeaponHandler.CurrentWeapon.CurrentData;
             this.Data = data;
             if (Icon != null)
                 Icon.sprite = data.Icon;
@@ -37,9 +37,7 @@ namespace Penwyn.Game
             Description?.SetText(data.Description);
             AttackTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.Damage, data.Damage, "red", "green")}>{data.Damage}</color>");
             NumOfBulletsTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.BulletPerShot, data.BulletPerShot, "red", "green")}>{data.BulletPerShot}</color>");
-            CooldownTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.Cooldown, data.Cooldown, "green", "red")}>{data.Cooldown}</color>");
-
-            Destroy(oldData);
+            ASPDTxt?.SetText($"<color={GetComparedValuesTextColor(oldData.Cooldown, data.Cooldown, "green", "red")}>{data.AttackSpeed}</color>");
         }
 
         protected virtual void Awake()

@@ -25,10 +25,13 @@ namespace Penwyn.Game
 
         public virtual void LoadEnemy()
         {
-            this._characterRun.RunSpeed = Data.MoveSpeed;
-            this._characterWeaponHandler.ChangeWeapon(Data.WeaponData);
+            this.CharacterRun.RunSpeed = Data.MoveSpeed;
+            this.CharacterWeaponHandler.ChangeWeapon(Data.WeaponData);
+            this.AIBrain = Instantiate(Data.Brain, transform.position, Quaternion.identity, transform);
+            this.AIBrain.InitializeWith(this);
+            this.AIBrain.Enabled = true;
         }
 
-        public EnemyData Data { get => (EnemyData)_data; }
+        public EnemyData Data { get => (EnemyData)BaseData; }
     }
 }

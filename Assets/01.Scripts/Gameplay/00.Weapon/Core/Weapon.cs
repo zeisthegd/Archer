@@ -93,8 +93,8 @@ namespace Penwyn.Game
         public virtual void LoadWeapon(WeaponData data)
         {
             CurrentData = data;
+            gameObject.name = data.Name;
             _weaponUseFeedbacks = Instantiate(CurrentData.WeaponUseFeedbacks, this.transform.position, Quaternion.identity, this.transform);
-            //SpriteRenderer.sprite = data.Icon;
         }
 
         [Button("Load Weapon Data")]
@@ -128,7 +128,6 @@ namespace Penwyn.Game
                 if (CurrentData.Upgrades != null)
                 {
                     LoadWeapon(data);
-                    Owner.Health.Set(Owner.Health.CurrentHealth, CurrentData.RequiredUpgradeValue);
                 }
                 else
                 {

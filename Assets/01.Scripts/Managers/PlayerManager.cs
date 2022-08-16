@@ -18,7 +18,7 @@ namespace Penwyn.Game
         private Player _player;
 
 
-        public static event UnityAction PlayerSpawned;
+        public event UnityAction PlayerSpawned;
         /// <summary>
         /// Spawn player if they are not existed.
         /// </summary>

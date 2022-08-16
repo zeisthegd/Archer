@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Penwyn.Tools;
+
 namespace Penwyn.Game
 {
     public class Player : Character
     {
+        private FloatValue _experience;
         protected override void Awake()
         {
             base.Awake();
@@ -14,9 +17,17 @@ namespace Penwyn.Game
         public virtual void Load(PlayerData data)
         {
             base.Load(data);
-            this._characterWeaponHandler.ChangeWeapon(Data.StartingBow);
+            _experience = new FloatValue(10);
+            _experience.ReachedMax += OnMaxExperienceReached;
+            this.CharacterWeaponHandler.ChangeWeapon(Data.StartingBow);
         }
 
-        public PlayerData Data { get => (PlayerData)_data; }
+        public void OnMaxExperienceReached()
+        {
+            CharacterWeaponHandler.CurrentWeapon.RequestUpgrade();
+        }
+
+        public PlayerData Data { get => (PlayerData)BaseData; }
+        public FloatValue Experience { get => _experience; }
     }
 }

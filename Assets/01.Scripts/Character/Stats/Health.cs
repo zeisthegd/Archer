@@ -104,6 +104,7 @@ namespace Penwyn.Game
         #region Kill
         public virtual void Kill()
         {
+            OnDeath?.Invoke(_character);
             _value.CurrentValue = 0;
             gameObject.SetActive(false);
         }

@@ -11,8 +11,11 @@ namespace Penwyn.Game
         public float MoveSpeed = 1;
         public float ThreatLevel = 1;
         public EnemyType Type;
-        
+
         [Header("Weapon")]
         public WeaponData WeaponData;
+
+        [Header("AI")]
+        public AIBrain Brain;
     }
 }

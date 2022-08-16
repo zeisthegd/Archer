@@ -15,13 +15,17 @@ namespace Penwyn.Game
 
         protected Character _character;
 
-        public virtual void Awake()
+        public virtual void InitializeWith(Character character)
         {
-            _character = GetComponent<Character>();
+            Assign(character);
             AwakeStates();
-            if (States.Count > 0)
-                CurrentState = States[0];
         }
+
+        public virtual void Assign(Character character)
+        {
+            _character = character;
+        }
+
 
         public virtual void Update()
         {
@@ -68,6 +72,8 @@ namespace Penwyn.Game
             {
                 States[i].Awake(this);
             }
+            if (States.Count > 0)
+                CurrentState = States[0];
         }
 
         public virtual void OnEnable()

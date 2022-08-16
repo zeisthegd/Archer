@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 1
   RuntimeAnimatorController: {fileID: 0}
-  MoveSpeed: 1
-  ThreatLevel: 3
+  MoveSpeed: 4.39
+  ThreatLevel: 1
   Type: 0
   WeaponData: {fileID: 11400000, guid: 33ef187984bf38b419ca0dcf87079629, type: 2}
+  Brain: {fileID: 3333399521944212451, guid: 7cd47c4949530dd4cb15afdbff345164, type: 3}

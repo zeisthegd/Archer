@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 using NaughtyAttributes;
 
@@ -15,41 +16,46 @@ namespace Penwyn.Game
 
         [Header("Pooling Settings")]
         public ObjectPooler EnemyPoolPrefab;
-        [ReadOnly] public List<ObjectPooler> ObjectPoolers;
+        [ReadOnly] public ObjectPooler EnemyPooler;
 
         [HorizontalLine]
         [Header("Spawn Settings")]
         public float MinDistanceToPlayer;
         public float MaxDistanceToPlayer;
-        public float TimeTillSpawnNewEnemies = 2;
 
 
         protected float _waitToSpawnTime = 0;
         protected bool _isSpawning = false;
+        protected Vector2 _positionNearPlayer;
+
+        private Enemy _boss;
+
+
+        public event UnityAction BossSpawned;
+
 
         protected virtual void Update()
         {
             WaitToSpawnEnemy();
-            HandleMaxLevelThreatIncreased();
         }
 
         public virtual void LoadData()
         {
-            CreateEnemyPools();
+            if (EnemyPooler == null)
+                CreateEnemyPool();
+
         }
 
         /// <summary>
         /// Create enemies pools.
         /// Connect the enemies' death events to the handler method.
         /// </summary>
-        protected virtual void CreateEnemyPools()
+        protected virtual void CreateEnemyPool()
         {
-            ObjectPoolers = new List<ObjectPooler>();
-            ObjectPooler enemyPool = Instantiate(EnemyPoolPrefab);
-            enemyPool.ObjectToPool = MapData.EnemyPrefab.gameObject;
-            enemyPool.Init();
-            ObjectPoolers.Add(enemyPool);
-            ConnectEnemyInPoolWithDeathEvent(enemyPool);
+            EnemyPooler = Instantiate(EnemyPoolPrefab);
+            EnemyPooler.ObjectToPool = MapData.EnemyPrefab.gameObject;
+            EnemyPooler.Init();
+            ConnectEnemyInPoolWithDeathEvent(EnemyPooler);
         }
 
         /// <summary>
@@ -59,21 +65,13 @@ namespace Penwyn.Game
         public virtual IEnumerator SpawnRandomEnemies()
         {
             _isSpawning = true;
-            while (LevelManager.Instance.CurrentThreatLevel < LevelManager.Instance.MaxThreatLevel)
-            {
-                EnemyData data = MapData.GetRandomEnemySpawnSettings();
-                foreach (ObjectPooler pooler in ObjectPoolers)
-                {
-                    if (pooler.ObjectToPool.gameObject == MapData.EnemyPrefab.gameObject)
-                    {
-                        Debug.Log("while: SpawnRandomEnemies");
-                        GameObject pooledObject = pooler.PullOneObject();
-                        SpawnOneEnemy(pooledObject, data);
-                        break;
-                    }
-                }
-                yield return null;
-            }
+
+            EnemyData data = MapData.GetRandomEnemySpawnSettings();
+            GameObject pooledObject = EnemyPooler.PullOneObject();
+            SpawnOneEnemy(pooledObject, data);
+            _waitToSpawnTime = MapData.EnemySpawningInterval;
+            yield return null;
+
             _isSpawning = false;
         }
 
@@ -84,11 +82,11 @@ namespace Penwyn.Game
         public virtual void SpawnOneEnemy(GameObject pooledObject, EnemyData data)
         {
             Enemy enemy = pooledObject.GetComponent<Enemy>();
-            enemy.AIBrain.Enabled = true;
             enemy.Load(data);
-            enemy.transform.position = GetPositionNearPlayer();
-            LevelManager.Instance.CurrentThreatLevel += data.ThreatLevel;
+            StartCoroutine(GetPositionNearPlayer());
+            enemy.transform.position = _positionNearPlayer;
             enemy.gameObject.SetActive(true);
+            LevelManager.Instance.Progress.CurrentValue += enemy.Data.ThreatLevel;
         }
 
         /// <summary>
@@ -99,7 +97,6 @@ namespace Penwyn.Game
             foreach (GameObject pooledbject in pooler.ObjectPool.PooledObjects)
             {
                 pooledbject.GetComponent<Enemy>().Health.OnDeath += HandleEnemyDeath;
-                pooledbject.GetComponent<Enemy>().Health.OnDeath += LevelManager.Instance.LootDropManager.HandleEnemyDeath;
             }
         }
 
@@ -107,12 +104,20 @@ namespace Penwyn.Game
         /// Get an empty position near the player.
         /// </summary>
         /// <returns></returns>
-        protected virtual Vector2 GetPositionNearPlayer()
+        protected virtual IEnumerator GetPositionNearPlayer()
         {
             Vector2 playerPos = PlayerManager.Instance.Player.Position;
-            Vector2 randomPosNearPlayer = new Vector2(Randomizer.RandomNumber(playerPos.x - MaxDistanceToPlayer, playerPos.x + MaxDistanceToPlayer),
-            Randomizer.RandomNumber(playerPos.y - MaxDistanceToPlayer, playerPos.y + MaxDistanceToPlayer));
-            return randomPosNearPlayer;
+            _positionNearPlayer = Vector2.zero;
+            float dst = 0;
+            do
+            {
+                _positionNearPlayer = new Vector2(Randomizer.RandomNumber(playerPos.x - MaxDistanceToPlayer, playerPos.x + MaxDistanceToPlayer),
+                Randomizer.RandomNumber(playerPos.y - MaxDistanceToPlayer, playerPos.y + MaxDistanceToPlayer));
+                dst = Vector3.Distance(_positionNearPlayer, playerPos);
+                yield return null;
+            }
+            while (dst < MinDistanceToPlayer || dst > MaxDistanceToPlayer);
+            yield return _positionNearPlayer;
         }
 
 
@@ -122,32 +127,25 @@ namespace Penwyn.Game
         public virtual void HandleEnemyDeath(Character character)
         {
             Enemy enemy = character.GetComponent<Enemy>();
-            LevelManager.Instance.CurrentThreatLevel -= enemy.Data.ThreatLevel;
-            StartWaitToSpawnEnemyCounter();
-        }
 
-        public virtual void HandleMaxLevelThreatIncreased()
-        {
-            if (LevelManager.Instance.MaxThreatLevel - LevelManager.Instance.CurrentThreatLevel > 1
-                    && _isSpawning == false && _waitToSpawnTime <= 0)
-                StartWaitToSpawnEnemyCounter();
-        }
-
-        public virtual void StartWaitToSpawnEnemyCounter()
-        {
-            _waitToSpawnTime = TimeTillSpawnNewEnemies;
+            PlayerManager.Instance.Player.Experience.CurrentValue += enemy.Data.ThreatLevel;
         }
 
         protected virtual void WaitToSpawnEnemy()
         {
-            if (_waitToSpawnTime > 0)
-                _waitToSpawnTime -= Time.deltaTime;
-            if (_waitToSpawnTime <= 0 && !_isSpawning)
+            if (LevelManager.Instance.IsPlaying)
             {
-                _waitToSpawnTime = 0;
-                StartCoroutine(SpawnRandomEnemies());
+                if (_waitToSpawnTime > 0)
+                    _waitToSpawnTime -= Time.deltaTime;
+                if (_waitToSpawnTime <= 0 && !_isSpawning)
+                {
+                    _waitToSpawnTime = 0;
+                    StartCoroutine(SpawnRandomEnemies());
+                }
             }
         }
+
+        public Enemy Boss { get => _boss; }
     }
 }
 

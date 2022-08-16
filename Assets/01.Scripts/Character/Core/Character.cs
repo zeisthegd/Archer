@@ -28,10 +28,10 @@ namespace Penwyn.Game
         public List<GameObject> AbilitiesContainer;
 
         protected List<CharacterAbility> _abilities;
-        protected CharacterWeaponHandler _characterWeaponHandler;
-        protected CharacterRun _characterRun;
-        protected CharacterHandleMoney _characterMoney;
-        protected CharacterData _data;
+        private CharacterWeaponHandler _characterWeaponHandler;
+        private CharacterRun _characterRun;
+        private CharacterHandleMoney _characterMoney;
+        private CharacterData _data;
         private StateMachine<CharacterAbilityStates> _states;
 
 
@@ -146,6 +146,6 @@ namespace Penwyn.Game
         public CharacterHandleMoney CharacterMoney { get => _characterMoney; }
         public CharacterWeaponHandler CharacterWeaponHandler { get => _characterWeaponHandler; }
         public StateMachine<CharacterAbilityStates> States { get => _states; }
-
+        protected CharacterData BaseData { get => _data; }
     }
 }

@@ -15,9 +15,8 @@ namespace Penwyn.Game
         [Header("Enemies")]
         public Enemy EnemyPrefab;
         public List<EnemyData> EnemyDatas;
-        public float StartingThreatLevel = 3;
-        public float ThreatLevelIncrementPerSecond = 0.1F;
-        
+        public float EnemySpawningInterval = 1.5F;
+
 
         public virtual EnemyData GetRandomEnemySpawnSettings()
         {

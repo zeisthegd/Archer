@@ -19,11 +19,14 @@ namespace Penwyn.Game
         public EnemySpawner EnemySpawner;
         public LootDropManager LootDropManager;
 
-        [Header("Threat Level")]
-        public float CurrentThreatLevel;
-        protected float _maxThreatLevel;
-        protected float _progress;
+        private FloatValue _progress;
         protected MapData _mapData;
+        private StateMachine<LevelState> _state = new StateMachine<LevelState>(LevelState.Idle);
+
+        public event UnityAction Loaded;
+
+
+        #region Level Loading###################################################
 
         /// <summary>
         /// Generate the level and spawn the enemies.
@@ -31,6 +34,8 @@ namespace Penwyn.Game
         public virtual void LoadLevel()
         {
             ChangeToRandomData();
+            _state.Change(LevelState.Playing);
+            Loaded?.Invoke();
         }
 
         /// <summary>
@@ -45,13 +50,27 @@ namespace Penwyn.Game
             LootDropManager.MapData = _mapData;
 
             EnemySpawner.LoadData();
-
-            CurrentThreatLevel = 0;
-            _progress = 0;
-            _maxThreatLevel = _mapData.StartingThreatLevel;
+            _progress = new FloatValue(100);
         }
 
-        public float MaxThreatLevel { get => _maxThreatLevel; }
-        public float Progress { get => _progress; }
+        #endregion
+
+        #region Events
+        public void OnProgressReachedMax()
+        {
+
+        }
+
+        #endregion
+
+        public FloatValue Progress { get => _progress; }
+        public StateMachine<LevelState> State { get => _state; }
+        public bool IsPlaying => _state.Is(LevelState.Playing);
+    }
+
+    public enum LevelState
+    {
+        Idle,
+        Playing
     }
 }
