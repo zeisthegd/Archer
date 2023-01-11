@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502cd353fc381c046851721985415b83, type: 3}
   m_Name: LeafBoy
   m_EditorClassIdentifier: 
+  Name: Character
   StartingHealth: 1
   RuntimeAnimatorController: {fileID: 0}
   MoveSpeed: 4.39
-  ThreatLevel: 1
+  ThreatLevel: 10
   Type: 0
   WeaponData: {fileID: 11400000, guid: 33ef187984bf38b419ca0dcf87079629, type: 2}
   Brain: {fileID: 3333399521944212451, guid: 7cd47c4949530dd4cb15afdbff345164, type: 3}

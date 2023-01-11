@@ -146,7 +146,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 48
-        height: 48
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,48 +156,6 @@ TextureImporter:
       bones: []
       spriteID: ccabf86522bd4b844aa8b54ab1b8561a
       internalID: 1237670337
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WeaponInfo_1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf902ac9869de504482d9fd34a7434cd
-      internalID: -455640953
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WeaponInfo_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a499b7a6a1cd6cc4dbd61c268c1ea504
-      internalID: -755066167
       vertices: []
       indices: 
       edges: []
@@ -214,8 +172,6 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       WeaponInfo_0: 1237670337
-      WeaponInfo_2: -755066167
-      WeaponInfo_1: -455640953
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
